@@ -1,6 +1,6 @@
 # Chat POC One
 
-A Stream Chat integration in Flutter app proof of concept
+A Stream chat integration in Flutter app proof of concept
 
 ### Platforms
 
@@ -66,19 +66,22 @@ These steps may be required in case of errors
 
 1. Set dependency versions of following in pubspec.yaml
 
-    stream_chat_flutter: 7.2.0-hotfix.1
-    connectivity_plus: 5.0.2
+    ```yaml
+     stream_chat_flutter: 7.2.0-hotfix.1
+     connectivity_plus: 5.0.2
+    ```
+
 
 2. Upgrade kotlin version in android/settings.gradle to min 1.9.0
 
     ```groovy
-    plugins {
-    id "org.jetbrains.kotlin.android" version "1.9.0" apply false
-    }
+     plugins {
+     id "org.jetbrains.kotlin.android" version "1.9.0" apply false
+     }
     ```
 
 3. Enable multidex support in android by running the command
 
     ```bash
-    flutter run
+     flutter run
     ```
