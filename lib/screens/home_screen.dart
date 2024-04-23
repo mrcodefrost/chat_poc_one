@@ -1,4 +1,4 @@
-import 'package:chat_poc_one/helpers.dart';
+import 'package:chat_poc_one/stream_keys.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/widgets_all.dart';
@@ -33,6 +33,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: Theme.of(context).iconTheme,
         backgroundColor: Colors.transparent,
         leadingWidth: 54,
         leading: Align(
@@ -50,8 +51,16 @@ class HomeScreen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 24.0),
-            child: Avatar.small(url: Helpers.randomPictureUrl()),
-          )
+            child: Hero(
+              tag: 'hero-profile-picture',
+              child: Avatar.small(
+                url: context.currentUserImage,
+                onTap: () {
+                  Navigator.of(context).push(ProfileScreen.route);
+                },
+              ),
+            ),
+          ),
         ],
       ),
       body: ValueListenableBuilder(

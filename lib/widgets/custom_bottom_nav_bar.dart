@@ -1,4 +1,6 @@
+import 'package:chat_poc_one/screens/contacts_screen.dart';
 import 'package:chat_poc_one/theme.dart';
+import 'package:chat_poc_one/widgets/glowing_action_button.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottonNavBar extends StatefulWidget {
@@ -22,42 +24,72 @@ class _CustomBottonNavBarState extends State<CustomBottonNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        top: false,
-        bottom: true,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _NavBarItem(
-              label: 'Messages',
-              icon: Icons.message,
-              index: 0,
-              onTap: handleItemSelected,
-              isSelected: (selectedIndex == 0),
+    final brightness = Theme.of(context).brightness;
+    return Card(
+      color: (brightness == Brightness.light) ? Colors.transparent : null,
+      elevation: 0,
+      margin: const EdgeInsets.all(0),
+      child: SafeArea(
+          top: false,
+          bottom: true,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 16.0,
+              left: 8.0,
+              right: 8.0,
             ),
-            _NavBarItem(
-              label: 'Notifications',
-              icon: Icons.notifications,
-              index: 1,
-              onTap: handleItemSelected,
-              isSelected: (selectedIndex == 1),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _NavBarItem(
+                  label: 'Messages',
+                  icon: Icons.message,
+                  index: 0,
+                  onTap: handleItemSelected,
+                  isSelected: (selectedIndex == 0),
+                ),
+                _NavBarItem(
+                  label: 'Notifications',
+                  icon: Icons.notifications,
+                  index: 1,
+                  onTap: handleItemSelected,
+                  isSelected: (selectedIndex == 1),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: GlowingActionButton(
+                      color: AppColors.secondary,
+                      icon: Icons.add,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => const Dialog(
+                            child: AspectRatio(
+                              aspectRatio: 8 / 7,
+                              child: ContactsScreen(),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+                _NavBarItem(
+                  label: 'Calls',
+                  icon: Icons.call,
+                  index: 2,
+                  onTap: handleItemSelected,
+                  isSelected: (selectedIndex == 2),
+                ),
+                _NavBarItem(
+                  label: 'Contacts',
+                  icon: Icons.contacts,
+                  index: 3,
+                  onTap: handleItemSelected,
+                  isSelected: (selectedIndex == 3),
+                ),
+              ],
             ),
-            _NavBarItem(
-              label: 'Calls',
-              icon: Icons.call,
-              index: 2,
-              onTap: handleItemSelected,
-              isSelected: (selectedIndex == 2),
-            ),
-            _NavBarItem(
-              label: 'Contacts',
-              icon: Icons.contacts,
-              index: 3,
-              onTap: handleItemSelected,
-              isSelected: (selectedIndex == 3),
-            ),
-          ],
-        ));
+          )),
+    );
   }
 }
 
@@ -86,7 +118,7 @@ class _NavBarItem extends StatelessWidget {
         onTap(index);
       },
       child: SizedBox(
-        height: 70,
+        width: 70,
         child: Column(
           children: [
             Icon(
