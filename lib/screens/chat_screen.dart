@@ -144,8 +144,8 @@ class _MessageList extends StatelessWidget {
             final message = messages[index];
             final nextMessage = messages[index + 1];
             if (!Jiffy.parse(message.createdAt.toLocal().toString()).isSame(
-                Jiffy.parse(nextMessage.createdAt.toLocal().toString()),
-                Units.DAY)) {
+              Jiffy.parse(nextMessage.createdAt.toLocal().toString()),
+            )) {
               return _DateLable(
                 dateTime: message.createdAt,
               );
@@ -302,18 +302,16 @@ class __DateLableState extends State<_DateLable> {
     final createdAt = Jiffy.parse(widget.dateTime.toString());
     final now = Jiffy.parse(DateTime.now().toString());
 
-    if (createdAt.isSame(now, Units.DAY)) {
+    if (createdAt.isSame(now)) {
       dayInfo = 'TODAY';
-    } else if (createdAt.isSame(now.subtract(Duration(days: 1)), Units.DAY)) {
+    } else if (createdAt.isSame(now.subtract(days: 1))) {
       dayInfo = 'YESTERDAY';
     } else if (createdAt.isAfter(
-      now.subtract(const Duration(days: 7)),
-      Units.DAY,
+      now.subtract(days: 7),
     )) {
       dayInfo = createdAt.EEEE;
     } else if (createdAt.isAfter(
       now.subtract(years: 1),
-      Units.DAY,
     )) {
       dayInfo = createdAt.MMMd;
     } else {
