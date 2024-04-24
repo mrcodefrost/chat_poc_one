@@ -28,12 +28,13 @@ class _MessagesScreenState extends State<MessagesScreen> {
         ])
       ],
     ),
+    channelStateSort: const [SortOption('last_message_at')],
   );
 
   @override
   void initState() {
-    channelListController.doInitialLoad();
     super.initState();
+    channelListController.doInitialLoad();
   }
 
   @override
@@ -42,58 +43,81 @@ class _MessagesScreenState extends State<MessagesScreen> {
     super.dispose();
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: RefreshIndicator(
+  //       onRefresh: channelListController.refresh,
+  //       child: StreamChannelListView(
+  //         controller: channelListController,
+  //         onChannelTap: (channel) => Navigator.push(
+  //           context,
+  //           MaterialPageRoute(
+  //             builder: (_) => StreamChannel(
+  //               channel: channel,
+  //               child: const Text('Channel Screen'),
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return PagedValueListenableBuilder<int, Channel>(
-      valueListenable: channelListController,
-      builder: (context, value, child) {
-        return value.when(
-          (channels, nextPageKey, error) {
-            if (channels.isEmpty) {
-              return const Center(
-                child: Text(
-                  'So empty.\nGo and message someone.',
-                  textAlign: TextAlign.center,
+    return Scaffold(
+      body: PagedValueListenableBuilder<int, Channel>(
+        valueListenable: channelListController,
+        builder: (context, value, child) {
+          return value.when(
+            (channels, nextPageKey, error) {
+              if (channels.isEmpty) {
+                return const Center(
+                  child: Text(
+                    'So empty.\nGo and message someone.',
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              }
+              return LazyLoadScrollView(
+                onEndOfPage: () async {
+                  if (nextPageKey != null) {
+                    channelListController.loadMore(nextPageKey);
+                  }
+                },
+                child: CustomScrollView(
+                  slivers: [
+                    // const SliverToBoxAdapter(
+                    //   child: _Stories(),
+                    // ),
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          return _MessageTile(
+                            channel: channels[index],
+                          );
+                        },
+                        childCount: channels.length,
+                      ),
+                    )
+                  ],
                 ),
               );
-            }
-            return LazyLoadScrollView(
-              onEndOfPage: () async {
-                if (nextPageKey != null) {
-                  channelListController.loadMore(nextPageKey);
-                }
-              },
-              child: CustomScrollView(
-                slivers: [
-                  const SliverToBoxAdapter(
-                    child: _Stories(),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return _MessageTile(
-                          channel: channels[index],
-                        );
-                      },
-                      childCount: channels.length,
-                    ),
-                  )
-                ],
+            },
+            loading: () => const Center(
+              child: SizedBox(
+                height: 100,
+                width: 100,
+                child: CircularProgressIndicator(),
               ),
-            );
-          },
-          loading: () => const Center(
-            child: SizedBox(
-              height: 100,
-              width: 100,
-              child: CircularProgressIndicator(),
             ),
-          ),
-          error: (e) => DisplayErrorMessage(
-            error: e,
-          ),
-        );
-      },
+            error: (e) => DisplayErrorMessage(
+              error: e,
+            ),
+          );
+        },
+      ),
     );
   }
 }

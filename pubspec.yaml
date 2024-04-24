@@ -27,6 +27,7 @@ dependencies:
   jiffy: ^6.3.0
   meta: ^1.11.0
   logger: ^2.2.0
+  collection: ^1.18.0
 
 
 dev_dependencies:

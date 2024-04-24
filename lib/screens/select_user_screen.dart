@@ -40,6 +40,7 @@ class _SelectUserScreenState extends State<SelectUserScreen> {
 
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => HomeScreen()),
+        // MaterialPageRoute(builder: (context) => MessagesScreen()),
       );
     } on Exception catch (e, st) {
       logger.e('Could not connect user', error: e, stackTrace: st);

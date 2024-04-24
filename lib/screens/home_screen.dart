@@ -4,29 +4,25 @@ import 'package:flutter/material.dart';
 import '../widgets/widgets_all.dart';
 import 'screens_all.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
-  final ValueNotifier<int> pageIndex = ValueNotifier(0);
-  final ValueNotifier<String> title = ValueNotifier('Messages');
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends State<HomeScreen> {
   final pages = const [
     MessagesScreen(),
-    NotificationsScreen(),
-    CallsScreen(),
     ContactsScreen(),
   ];
 
-  final pageTitles = const [
-    'Messages',
-    'Notifications',
-    'Calls',
-    'Contacts',
-  ];
+  int _pageNumber = 0; // original condition
 
-  void _onNavBarItemSelected(index) {
-    title.value = pageTitles[index];
-    pageIndex.value = index;
+  onPageChange(int newPageNumber) {
+    setState(() {
+      _pageNumber = newPageNumber; // new condition updated
+    });
   }
 
   @override
@@ -41,11 +37,7 @@ class HomeScreen extends StatelessWidget {
                 onTap: () {
                   logger.i('TODO Search');
                 })),
-        title: ValueListenableBuilder(
-            valueListenable: title,
-            builder: (BuildContext context, String value, _) {
-              return Text(value);
-            }),
+        title: const Text('Chat POC'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 24.0),
@@ -61,13 +53,20 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: ValueListenableBuilder(
-          valueListenable: pageIndex,
-          builder: (BuildContext context, int value, _) {
-            return pages[value];
-          }),
-      bottomNavigationBar:
-          CustomBottonNavBar(onItemSelected: _onNavBarItemSelected),
+      body: pages[_pageNumber],
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onPageChange,
+        currentIndex: _pageNumber,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message),
+            label: 'Message',
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.contacts), label: 'Contacts'),
+          // BottomNavigationBarItem(icon: Icon(Icons.add)),
+        ],
+      ),
     );
   }
 }
