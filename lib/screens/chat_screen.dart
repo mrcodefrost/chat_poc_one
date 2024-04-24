@@ -74,26 +74,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           title: const _AppBarTitle(),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Center(
-                child: IconBorder(
-                  icon: CupertinoIcons.video_camera_solid,
-                  onTap: () {},
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: Center(
-                child: IconBorder(
-                  icon: CupertinoIcons.phone_solid,
-                  onTap: () {},
-                ),
-              ),
-            ),
-          ],
         ),
         body: Column(
           children: [
@@ -109,7 +89,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     _MessageList(messages: messages),
               ),
             ),
-            const _ActionBar(),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5.0),
+              child: const _ActionBar(),
+            ),
           ],
         ),
       ),

@@ -32,11 +32,13 @@ const userSacha = DemoUser(
 );
 
 const userDeven = DemoUser(
-  id: 'deven',
-  name: 'Deven Joshi',
+  id: 'deveni',
+  name: 'Deveni Joshi',
   image:
       'https://images.unsplash.com/photo-1572631382901-cf1a0a6087cb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHBvcnRyYWl0c3xlbnwwfHwwfHx8MA%3D%3D',
 );
+
+// user once deleted, the user id can never be used again
 
 const userSahil = DemoUser(
   id: 'sahil',
