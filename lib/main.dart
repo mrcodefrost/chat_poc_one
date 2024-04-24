@@ -30,13 +30,11 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return StreamChatCore(
             client: client,
-            child: ChannelsBloc(
-                child: UsersBloc(
-                    child:
-                        child!)) // child will not be null as home screen is passed at home
+            child:
+                child! // child will not be null as a screen is passed at home
             );
       },
-      home: HomeScreen(),
+      home: const SelectUserScreen(),
     );
   }
 }

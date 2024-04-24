@@ -49,8 +49,8 @@ abstract class Helpers {
       if (otherMembers?.length == 1) {
         return otherMembers!.first.user?.image;
       }
-    } else {
-      return null;
     }
+    // TODO always return null ?
+    return null;
   }
 }

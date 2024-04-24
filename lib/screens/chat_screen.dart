@@ -573,16 +573,33 @@ class _ActionBar extends StatefulWidget {
 }
 
 class __ActionBarState extends State<_ActionBar> {
-  final TextEditingController controller = TextEditingController();
+  // final TextEditingController controller = TextEditingController();
+  final StreamMessageInputController controller =
+      StreamMessageInputController();
+
+  Timer? _debounce;
 
   Future<void> _sendMessage() async {
     if (controller.text.isNotEmpty) {
-      StreamChannel.of(context)
-          .channel
-          .sendMessage(Message(text: controller.text));
+      StreamChannel.of(context).channel.sendMessage(controller.message);
       controller.clear();
       FocusScope.of(context).unfocus();
     }
+  }
+
+  void _onTextChange() {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(seconds: 1), () {
+      if (mounted) {
+        StreamChannel.of(context).channel.keyStroke();
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(_onTextChange);
   }
 
   @override
@@ -618,9 +635,9 @@ class __ActionBarState extends State<_ActionBar> {
             child: Padding(
               padding: const EdgeInsets.only(left: 16.0),
               child: TextField(
-                controller: controller,
+                controller: controller.textFieldController,
                 onChanged: (val) {
-                  StreamChannel.of(context).channel.keyStroke();
+                  controller.text = val;
                 },
                 style: const TextStyle(fontSize: 14),
                 decoration: const InputDecoration(
