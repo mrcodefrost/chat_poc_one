@@ -134,7 +134,7 @@ class _MessageList extends StatelessWidget {
         reverse: true,
         separatorBuilder: (context, index) {
           if (index == messages.length - 1) {
-            return _DateLable(dateTime: messages[index].createdAt);
+            return _DateLabel(dateTime: messages[index].createdAt);
           }
           if (messages.length == 1) {
             return const SizedBox.shrink();
@@ -146,7 +146,7 @@ class _MessageList extends StatelessWidget {
             if (!Jiffy.parse(message.createdAt.toLocal().toString()).isSame(
               Jiffy.parse(nextMessage.createdAt.toLocal().toString()),
             )) {
-              return _DateLable(
+              return _DateLabel(
                 dateTime: message.createdAt,
               );
             } else {
@@ -282,8 +282,8 @@ class _MessageOwnTile extends StatelessWidget {
   }
 }
 
-class _DateLable extends StatefulWidget {
-  const _DateLable({
+class _DateLabel extends StatefulWidget {
+  const _DateLabel({
     Key? key,
     required this.dateTime,
   }) : super(key: key);
@@ -291,10 +291,10 @@ class _DateLable extends StatefulWidget {
   final DateTime dateTime;
 
   @override
-  __DateLableState createState() => __DateLableState();
+  _DateLabelState createState() => _DateLabelState();
 }
 
-class __DateLableState extends State<_DateLable> {
+class _DateLabelState extends State<_DateLabel> {
   late String dayInfo;
 
   @override

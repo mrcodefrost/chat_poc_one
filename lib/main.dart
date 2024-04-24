@@ -9,21 +9,23 @@ void main() {
 
   runApp(MyApp(
     client: client,
+    appTheme: AppTheme(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.client});
+  const MyApp({super.key, required this.client, required this.appTheme});
 
   final StreamChatClient client;
+  final AppTheme appTheme;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Chat POC One',
-      theme: AppTheme().light,
-      darkTheme: AppTheme().dark,
+      theme: appTheme.light,
+      darkTheme: appTheme.dark,
       themeMode: ThemeMode.dark,
       builder: (context, child) {
         return StreamChatCore(

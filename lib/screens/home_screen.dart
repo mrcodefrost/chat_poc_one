@@ -33,20 +33,18 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: Theme.of(context).iconTheme,
-        backgroundColor: Colors.transparent,
         leadingWidth: 54,
         leading: Align(
             alignment: Alignment.centerRight,
-            child: IconBackground(icon: Icons.search, onTap: () {})),
+            child: IconBackground(
+                icon: Icons.search,
+                onTap: () {
+                  logger.i('TODO Search');
+                })),
         title: ValueListenableBuilder(
             valueListenable: title,
             builder: (BuildContext context, String value, _) {
-              return Text(
-                value,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              );
+              return Text(value);
             }),
         actions: [
           Padding(

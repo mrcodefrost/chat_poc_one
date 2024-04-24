@@ -6,7 +6,7 @@ import '../widgets/widgets_all.dart';
 import 'screens_all.dart';
 
 class ContactsScreen extends StatelessWidget {
-  const ContactsScreen({Key? key}) : super(key: key);
+  const ContactsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
